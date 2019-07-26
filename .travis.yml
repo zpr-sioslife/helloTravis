@@ -73,3 +73,14 @@ matrix:
 #     on_start: always
 #     on_cancel: always
 #     on_error: always
+
+before_deploy:
+  - ls -la ${TRAVIS_BUILD_DIR}/android/app/build/outputs/apk
+  - ls -la ${TRAVIS_BUILD_DIR}/android/app/build/outputs/apk/release
+
+deploy:
+  provider: releases
+  api_key: $GH_TOKEN
+  file: ${TRAVIS_BUILD_DIR}/android/app/build/outputs/apk/release/app-release-unsigned.apk
+  skip_cleanup: true
+  draft: true
